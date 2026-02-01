@@ -160,6 +160,11 @@
   </div>
 </div>
 
+<!-- Bengali Love Song (ONLY ADDITION) -->
+<audio id="loveSong" loop>
+  <source src="https://pagalworld.com.se/files/download/id/6876" type="audio/mpeg">
+</audio>
+
 <img id="sticker" src="https://raw.githubusercontent.com/sayonmallick/Guest/main/myphoto.jpg">
 <div class="hearts-layer"></div>
 <div class="name-layer"></div>
@@ -176,6 +181,7 @@
   const sticker = document.getElementById('sticker');
   const heartsLayer = document.querySelector('.hearts-layer');
   const nameLayer = document.querySelector('.name-layer');
+  const loveSong = document.getElementById('loveSong');
 
   function moveNo() {
     noBtn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
@@ -216,6 +222,7 @@
       document.body.style.background = "linear-gradient(180deg, #ff7aa2, #ff9eb8)";
       page2.style.display = 'block';
 
+      loveSong.play();   // 🔊 SONG STARTS HERE
       setInterval(spawnName, 700);
     }, 2000);
   });
@@ -225,6 +232,10 @@
     surpriseBtn.style.display = 'none';
   });
 </script>
+
+</body>
+</html>
+
 
 </body>
 </html>
