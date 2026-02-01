@@ -148,8 +148,10 @@
     <button id="surpriseBtn">Surprise Me</button>
 
     <div id="secret">
-      💌 You are the most beautiful part of my life.<br>
-      Saying YES made my world brighter 🌸✨
+      💌 If love be sin, then gladly am I lost;
+If truth be sworn, let this my vow remain:
+Whilst breath still warms this ever-faithful chest,
+My heart is thine, and thine alone, amen <br> 🌸✨
     </div> 
 
     <svg class="heart-divider" viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg">
@@ -204,7 +206,7 @@
     };
 
     // --- TRANSITION TO LOVE PAGE ---
-    yesBtn.addEventListener('click', () => {   const song = document.getElementById('loveSong');   song.volume = 0.6;   song.play();    sticker.classList.add('show');   confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });    setTimeout(() => {     sticker.classList.remove('show');     page1.style.display = 'none';     document.body.style.background = "linear-gradient(180deg, #ff7aa2, #ff9eb8)";     page2.style.display = 'block';   }, 2000); });
+    yesBtn.addEventListener('click', () => {
       sticker.classList.add('show');
       confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
 
@@ -224,9 +226,5 @@
       for(let i=0; i<20; i++) setTimeout(spawnHeart, i*80);
     });
   </script>
-  <audio id="loveSong" loop>
-  <source src="https://pagalfree.com/musics/128-Tum%20Hi%20Ho%20-%20Aashiqui%202%20128%20Kbps.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
 </body>
 </html>
