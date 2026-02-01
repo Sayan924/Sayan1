@@ -1,34 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <title>Valentine 💖</title>
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-html, body { height: 100%; margin: 0; padding: 0; }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 
 body {
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background: #ffe6ec;
   font-family: Arial, sans-serif;
   overflow: hidden;
-  transition: background 1.5s ease;
   text-align: center;
+  transition: background 1.5s ease;
 }
 
-#page1, #page2 { width: 100%; }
+/* ---------- PAGE SETUP ---------- */
+#page1, #page2 {
+  width: 100%;
+}
 
-#page2 { display: none; color: white; }
+#page2 {
+  display: none;
+  color: white;
+}
 
 h1 {
   font-family: "Courier New", monospace;
   text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
 }
 
+/* ---------- BUTTONS ---------- */
 button {
   padding: 14px 40px;
   border-radius: 30px;
@@ -39,24 +49,26 @@ button {
   color: white;
 }
 
-#no { position: fixed; }
+#no {
+  position: fixed;
+}
 
+/* ---------- LOCK ---------- */
 #lockBox {
-  margin-top: 25px;
+  margin-top: 20px;
   font-size: 28px;
   font-weight: bold;
-  letter-spacing: 1px;
-  animation: lockPulse 2s infinite;
+  animation: pulse 2s infinite;
 }
 
 #lockIcon {
-  font-size: 48px;
+  font-size: 50px;
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   animation: glow 2s infinite;
 }
 
-@keyframes lockPulse {
+@keyframes pulse {
   0%,100% { transform: scale(1); opacity: 0.8; }
   50% { transform: scale(1.08); opacity: 1; }
 }
@@ -66,10 +78,44 @@ button {
   50% { text-shadow: 0 0 20px #ffd1dc; }
 }
 
-#lockBox.reveal {
-  animation: none;
+/* ---------- RING ---------- */
+#ring {
+  position: fixed;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.3);
+  font-size: 80px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
 }
 
+#ring.show {
+  animation: ringDrop 1.8s cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+@keyframes ringDrop {
+  0% {
+    top: -120px;
+    opacity: 0;
+    transform: translateX(-50%) scale(0.3);
+  }
+  60% {
+    top: 45%;
+    opacity: 1;
+    transform: translateX(-50%) scale(1.2);
+  }
+  80% {
+    top: 40%;
+    transform: translateX(-50%) scale(0.95);
+  }
+  100% {
+    top: 42%;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+/* ---------- SECRET ---------- */
 #secret {
   display: none;
   margin: 25px auto;
@@ -81,7 +127,8 @@ button {
   backdrop-filter: blur(10px);
 }
 
-.hearts-layer, .name-layer {
+/* ---------- FLOATING NAMES ---------- */
+.name-layer {
   position: fixed;
   inset: 0;
   pointer-events: none;
@@ -104,17 +151,21 @@ button {
 
 <body>
 
+<!-- 💍 RING -->
+<div id="ring">💍</div>
+
+<!-- PAGE 1 -->
 <div id="page1">
   <h1>Will you be my Valentine? 💘</h1>
   <button id="yes">Yes ❤️</button>
   <button id="no">No 😜</button>
 </div>
 
+<!-- PAGE 2 -->
 <div id="page2">
   <h1>I Love You 💘</h1>
   <h1>Love From Sayan</h1>
 
-  <!-- 🔒 LOCKED MESSAGE -->
   <div id="lockBox">
     <span id="lockIcon">🔒</span>
     Answer Locked
@@ -123,14 +174,10 @@ button {
   <button id="surpriseBtn">Surprise Me</button>
 
   <div id="secret">
-    💌 If love be sin, then gladly am I lost;<br>
-    Whilst breath still warms this faithful chest,<br>
-    My heart is yours — today, tomorrow, always. ❤️
+    💌 My heart chose you long before this moment.<br>
+    This ring is just proof of forever. ❤️
   </div>
 </div>
-
-<div class="hearts-layer"></div>
-<div class="name-layer"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
@@ -141,11 +188,12 @@ const yesBtn = document.getElementById("yes");
 const noBtn = document.getElementById("no");
 const lockBox = document.getElementById("lockBox");
 const lockIcon = document.getElementById("lockIcon");
+const ring = document.getElementById("ring");
 const secret = document.getElementById("secret");
 
 noBtn.onmouseenter = () => {
-  noBtn.style.left = Math.random()*80 + "vw";
-  noBtn.style.top = Math.random()*80 + "vh";
+  noBtn.style.left = Math.random() * 80 + "vw";
+  noBtn.style.top  = Math.random() * 80 + "vh";
 };
 
 yesBtn.onclick = () => {
@@ -154,15 +202,16 @@ yesBtn.onclick = () => {
   document.body.style.background =
     "linear-gradient(180deg,#ff7aa2,#ff9eb8)";
 
-  // 🔓 AUTO REVEAL
+  // 🔓 UNLOCK + 💍 RING
   setTimeout(() => {
     lockIcon.textContent = "🔓";
-    lockBox.innerHTML = "Your Answer is My Forever ❤️";
-    lockBox.classList.add("reveal");
+    lockBox.textContent = "Your Answer is My Forever ❤️";
+
+    ring.classList.add("show");
 
     confetti({
-      particleCount: 180,
-      spread: 80,
+      particleCount: 200,
+      spread: 85,
       origin: { y: 0.6 }
     });
   }, 3000);
