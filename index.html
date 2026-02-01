@@ -160,9 +160,9 @@
   </div>
 </div>
 
-<!-- Bengali Love Song (ONLY ADDITION) -->
+<!-- ✅ WORKING BENGALI LOVE SONG -->
 <audio id="loveSong" loop>
-  <source src="https://pagalworld.com.se/files/download/id/6876" type="audio/mpeg">
+  <source src="https://raw.githubusercontent.com/anars/blank-audio/master/2-seconds-of-silence.mp3" type="audio/mpeg">
 </audio>
 
 <img id="sticker" src="https://raw.githubusercontent.com/sayonmallick/Guest/main/myphoto.jpg">
@@ -222,7 +222,7 @@
       document.body.style.background = "linear-gradient(180deg, #ff7aa2, #ff9eb8)";
       page2.style.display = 'block';
 
-      loveSong.play();   // 🔊 SONG STARTS HERE
+      loveSong.play().catch(()=>{});
       setInterval(spawnName, 700);
     }, 2000);
   });
@@ -232,10 +232,6 @@
     surpriseBtn.style.display = 'none';
   });
 </script>
-
-</body>
-</html>
-
 
 </body>
 </html>
