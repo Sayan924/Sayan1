@@ -12,7 +12,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: #ffe6ec;
+      background: #ffe6ec; 
       font-family: 'Arial', sans-serif;
       overflow: hidden;
       transition: background 1.5s ease;
@@ -49,6 +49,8 @@
 
     #page2 h1 {
       font-size: 48px;
+      font-weight: bold;
+      margin-bottom: 20px;
       color: white;
       text-shadow: 2px 2px 10px rgba(0,0,0,0.1);
       font-family: 'Courier New', Courier, monospace;
@@ -65,13 +67,13 @@
     }
 
     #secret {
-      display: none;
+      display: none; 
       margin: 20px auto;
       font-size: 22px;
       max-width: 85%;
       line-height: 1.6;
       color: white;
-      background: rgba(255,255,255,0.25);
+      background: rgba(255, 255, 255, 0.25);
       padding: 25px;
       border-radius: 20px;
       backdrop-filter: blur(10px);
@@ -83,41 +85,53 @@
       top: 45%;
       transform: translate(-50%, -50%) scale(0.9);
       max-width: 70%;
+      max-height: 60%;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
       opacity: 0;
-      transition: 0.3s;
+      pointer-events: none;
+      transition: opacity 220ms ease, transform 300ms cubic-bezier(.2,.9,.2,1);
       z-index: 9999;
     }
 
-    #sticker.show {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
+    #sticker.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 
-    .hearts-layer, .name-layer {
+    .hearts-layer {
       position: fixed;
       inset: 0;
       pointer-events: none;
       overflow: hidden;
+      z-index: 2;
     }
 
-    .heart, .name {
+    .name-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 15;
+    }
+
+    .heart {
       position: absolute;
       bottom: -60px;
-      animation: floatUp 5s linear forwards;
+      user-select: none;
+      will-change: transform, opacity;
     }
 
     .name {
+      position: absolute;
+      bottom: -60px;
       color: white;
       font-size: 22px;
       font-weight: bold;
-      text-shadow: 0 0 10px rgba(255,255,255,0.8);
+      text-shadow: 0 0 10px rgba(255,255,255,0.9);
+      animation: heartFloat 5s linear forwards;
     }
 
-    @keyframes floatUp {
-      to {
-        transform: translateY(-140vh);
-        opacity: 0;
-      }
+    @keyframes heartFloat {
+      0%   { transform: translateY(0) translateX(0) scale(0.85); opacity: 1; }
+      100% { transform: translateY(-140vh) translateX(var(--dx, 0px)) scale(1.05); opacity: 0; }
     }
   </style>
 </head>
@@ -151,10 +165,10 @@
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
-  const yesBtn = document.getElementById('yes');
-  const noBtn = document.getElementById('no');
   const page1 = document.getElementById('page1');
   const page2 = document.getElementById('page2');
+  const yesBtn = document.getElementById('yes');
+  const noBtn = document.getElementById('no');
   const surpriseBtn = document.getElementById('surpriseBtn');
   const secret = document.getElementById('secret');
   const sticker = document.getElementById('sticker');
@@ -169,29 +183,30 @@
   noBtn.addEventListener('click', moveNo);
 
   function spawnHeart() {
-    const h = document.createElement('div');
-    h.className = 'heart';
-    h.innerText = ['❤️','💖','💘','💕'][Math.floor(Math.random()*4)];
-    h.style.left = Math.random() * 100 + 'vw';
-    h.style.fontSize = (16 + Math.random() * 30) + 'px';
-    heartsLayer.appendChild(h);
-    setTimeout(() => h.remove(), 5000);
+    const el = document.createElement('div');
+    el.className = 'heart';
+    el.textContent = ['❤️','💖','💘','💕'][Math.floor(Math.random() * 4)];
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.fontSize = (16 + Math.random() * 30) + 'px';
+    el.style.animation = `heartFloat 5s linear forwards`;
+    heartsLayer.appendChild(el);
+    setTimeout(() => el.remove(), 5000);
   }
   setInterval(spawnHeart, 500);
 
-  // ⭐ NAME RAIN (PAGE 2 ONLY)
   function spawnName() {
     const n = document.createElement('div');
     n.className = 'name';
-    n.innerText = 'Gulu ❤️';
+    n.textContent = 'Gulu ❤️';
     n.style.left = Math.random() * 100 + 'vw';
+    n.style.setProperty('--dx', (Math.random() * 120 - 60) + 'px');
     nameLayer.appendChild(n);
     setTimeout(() => n.remove(), 5000);
   }
 
   yesBtn.addEventListener('click', () => {
     sticker.classList.add('show');
-    confetti({ particleCount: 150, spread: 70 });
+    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
 
     setTimeout(() => {
       sticker.classList.remove('show');
@@ -199,7 +214,6 @@
       document.body.style.background = "linear-gradient(180deg, #ff7aa2, #ff9eb8)";
       page2.style.display = 'block';
 
-      // START NAME RAIN
       setInterval(spawnName, 700);
     }, 2000);
   });
@@ -212,4 +226,5 @@
 
 </body>
 </html>
+
 
