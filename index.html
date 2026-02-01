@@ -3,159 +3,203 @@
 <head>
 <meta charset="UTF-8">
 <title>Valentine 💖</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-html,body{margin:0;height:100%;font-family:Arial;background:#ffe6ec;overflow:hidden;text-align:center}
-
-#page1,#page2{z-index:10}
-#page1{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%}
-#page2{display:none}
-
-h1{color:white;font-size:48px;text-shadow:2px 2px 10px rgba(0,0,0,.1)}
-
-.waiting{
-margin-top:10px;
-font-size:20px;
-color:white;
-opacity:.9;
-font-style:italic;
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  height:100%;
+  font-family:Arial, sans-serif;
+  background:#ffe6ec;
+  overflow:hidden;
+  text-align:center;
 }
 
-.buttons{margin-top:25px;display:flex;gap:20px}
-button{padding:15px 30px;font-size:18px;border:none;border-radius:10px;font-weight:bold;cursor:pointer}
+/* PAGE 1 */
+#page1{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+#page1 h1{
+  color:#ff2f6d;
+  font-size:36px;
+}
+
+.waiting{
+  margin-top:8px;
+  font-size:18px;
+  color:#d1004f;
+  font-style:italic;
+}
+
+/* BUTTONS */
+.buttons{
+  margin-top:25px;
+  display:flex;
+  gap:20px;
+}
+button{
+  padding:14px 28px;
+  font-size:18px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+}
 #yes{background:#ff2f6d;color:white}
 #no{background:#555;color:white;position:fixed;left:60%;top:50%}
 
-#surpriseBtn{
-background:#ff5e99;
-color:white;
-padding:14px 45px;
-font-size:18px;
-border-radius:30px;
-border:none;
-margin:20px auto;
-cursor:pointer
+/* PAGE 2 */
+#page2{
+  display:none;
+  padding-top:30px;
+}
+#page2 h1{
+  color:white;
+  font-size:36px;
 }
 
-/* 💌 REAL ENVELOPE */
+/* SURPRISE BUTTON */
+#surpriseBtn{
+  margin-top:20px;
+  background:#ff5e99;
+  color:white;
+  padding:14px 40px;
+  border-radius:30px;
+  border:none;
+  font-size:18px;
+  cursor:pointer;
+}
+
+/* 💌 MOBILE FRIENDLY ENVELOPE */
 .envelope-wrapper{
-display:none;
-margin:40px auto;
-width:300px;
-height:200px;
-position:relative;
-perspective:1000px;
+  display:none;
+  width:260px;
+  max-width:90vw;
+  margin:40px auto;
+  position:relative;
 }
 
 .envelope{
-width:100%;
-height:100%;
-position:relative;
-background:#ffb6c1;
-border-radius:10px;
-overflow:hidden;
+  position:relative;
+  width:100%;
+  height:160px;
+  background:#ffb6c1;
+  border-radius:10px;
+  overflow:hidden;
 }
 
+/* bottom */
 .envelope::before{
-content:"";
-position:absolute;
-width:0;height:0;
-border-left:150px solid transparent;
-border-right:150px solid transparent;
-border-bottom:100px solid #ff9eb8;
-bottom:0;left:0;
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:linear-gradient(135deg, transparent 50%, #ff9eb8 50%);
+  clip-path:polygon(0 100%,50% 60%,100% 100%);
 }
 
+/* flap */
 .flap{
-position:absolute;
-top:0;left:0;
-width:0;height:0;
-border-left:150px solid transparent;
-border-right:150px solid transparent;
-border-top:100px solid #ff8fab;
-transform-origin:top;
-transition:transform 1s ease;
-z-index:3;
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#ff8fab;
+  clip-path:polygon(0 0,100% 0,50% 60%);
+  transform-origin:top;
+  transition:transform 1s ease;
+  z-index:3;
 }
 
+/* letter */
 .letter{
-position:absolute;
-width:90%;
-left:5%;
-bottom:10px;
-background:white;
-border-radius:8px;
-padding:20px;
-font-size:18px;
-line-height:1.6;
-color:#d1004f;
-transform:translateY(120%);
-transition:transform 1.2s ease;
-z-index:2;
+  position:absolute;
+  width:90%;
+  left:5%;
+  bottom:10px;
+  background:white;
+  border-radius:8px;
+  padding:16px;
+  font-size:16px;
+  line-height:1.5;
+  color:#d1004f;
+  transform:translateY(120%);
+  transition:transform 1.2s ease;
+  z-index:2;
 }
 
-/* OPEN STATE */
+/* OPEN */
 .envelope-wrapper.open .flap{
-transform:rotateX(180deg);
+  transform:rotateX(180deg);
 }
-
 .envelope-wrapper.open .letter{
-transform:translateY(-10px);
+  transform:translateY(-10px);
 }
 
-/* EFFECTS */
+/* FLOATING EFFECTS */
 .hearts-layer,.name-layer{
-position:fixed;inset:0;pointer-events:none
+  position:fixed;
+  inset:0;
+  pointer-events:none;
 }
-.hearts-layer{z-index:2}
-.name-layer{z-index:15}
-
 .heart,.name{
-position:absolute;
-bottom:-50px;
-animation:float 5s linear forwards
+  position:absolute;
+  bottom:-40px;
+  animation:float 5s linear forwards;
 }
-
 .name{
-color:white;font-size:22px;font-weight:bold;text-shadow:0 0 10px white
+  color:white;
+  font-size:20px;
+  font-weight:bold;
+  text-shadow:0 0 10px white;
 }
-
 @keyframes float{
-from{transform:translateY(0);opacity:1}
-to{transform:translateY(-140vh);opacity:0}
+  from{transform:translateY(0);opacity:1}
+  to{transform:translateY(-140vh);opacity:0}
 }
 </style>
 </head>
 
 <body>
 
+<!-- PAGE 1 -->
 <div id="page1">
-<h1>Will you be my Valentine? 💘</h1>
-<div class="waiting">Waiting for your answer… 💕</div>
+  <h1>Will you be my Valentine? 💘</h1>
+  <div class="waiting">Waiting for your answer… 💕</div>
 
-<div class="buttons">
-<button id="yes">Yes ❤️</button>
-<button id="no">No 😜</button>
-</div>
-</div>
-
-<div id="page2">
-<h1>I Love You 💘</h1>
-<h1>Love From Sayan</h1>
-<button id="surpriseBtn">Surprise Me</button>
-
-<div class="envelope-wrapper" id="envelopeWrap">
-  <div class="envelope">
-    <div class="flap"></div>
-    <div class="letter">
-      If love be sin, then gladly am I lost;<br>
-      If truth be sworn, let this my vow remain:<br>
-      Whilst breath still warms this ever-faithful chest,<br>
-      My heart is thine, and thine alone, amen.
-    </div>
+  <div class="buttons">
+    <button id="yes">Yes ❤️</button>
+    <button id="no">No 😜</button>
   </div>
 </div>
+
+<!-- PAGE 2 -->
+<div id="page2">
+  <h1>I Love You 💘</h1>
+  <h1>Love From Sayan</h1>
+
+  <button id="surpriseBtn">Surprise Me</button>
+
+  <div class="envelope-wrapper" id="envelopeWrap">
+    <div class="envelope">
+      <div class="flap"></div>
+      <div class="letter">
+        If love be sin, then gladly am I lost;<br>
+        If truth be sworn, let this my vow remain:<br>
+        Whilst breath still warms this ever-faithful chest,<br>
+        My heart is thine, and thine alone, amen.
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="hearts-layer"></div>
@@ -164,58 +208,63 @@ to{transform:translateY(-140vh);opacity:0}
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
-const yesBtn=document.getElementById('yes');
-const noBtn=document.getElementById('no');
-const page1=document.getElementById('page1');
-const page2=document.getElementById('page2');
-const surpriseBtn=document.getElementById('surpriseBtn');
-const envelopeWrap=document.getElementById('envelopeWrap');
-const heartsLayer=document.querySelector('.hearts-layer');
-const nameLayer=document.querySelector('.name-layer');
+const yesBtn=document.getElementById("yes");
+const noBtn=document.getElementById("no");
+const page1=document.getElementById("page1");
+const page2=document.getElementById("page2");
+const surpriseBtn=document.getElementById("surpriseBtn");
+const envelopeWrap=document.getElementById("envelopeWrap");
+const heartsLayer=document.querySelector(".hearts-layer");
+const nameLayer=document.querySelector(".name-layer");
 
+/* NO button run */
 noBtn.onmouseenter=noBtn.onclick=()=>{
-noBtn.style.left=Math.random()*(innerWidth-100)+"px";
-noBtn.style.top=Math.random()*(innerHeight-50)+"px";
-}
+  noBtn.style.left=Math.random()*(innerWidth-100)+"px";
+  noBtn.style.top=Math.random()*(innerHeight-50)+"px";
+};
 
-function heart(){
-let h=document.createElement("div");
-h.className="heart";
-h.textContent="❤️";
-h.style.left=Math.random()*100+"vw";
-heartsLayer.appendChild(h);
-setTimeout(()=>h.remove(),5000);
-}
-setInterval(heart,500);
+/* hearts */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.textContent="❤️";
+  h.style.left=Math.random()*100+"vw";
+  heartsLayer.appendChild(h);
+  setTimeout(()=>h.remove(),5000);
+},500);
 
+/* names */
 function nameRain(){
-let n=document.createElement("div");
-n.className="name";
-n.textContent="Gulu ❤️";
-n.style.left=Math.random()*100+"vw";
-nameLayer.appendChild(n);
-setTimeout(()=>n.remove(),5000);
+  const n=document.createElement("div");
+  n.className="name";
+  n.textContent="Gulu ❤️";
+  n.style.left=Math.random()*100+"vw";
+  nameLayer.appendChild(n);
+  setTimeout(()=>n.remove(),5000);
 }
 
+/* YES */
 yesBtn.onclick=()=>{
-confetti({particleCount:150,spread:70});
-setTimeout(()=>{
-page1.style.display="none";
-document.body.style.background="linear-gradient(180deg,#ff7aa2,#ff9eb8)";
-page2.style.display="block";
-setInterval(nameRain,700);
-},1500);
-}
+  confetti({particleCount:150,spread:70});
+  setTimeout(()=>{
+    page1.style.display="none";
+    document.body.style.background="linear-gradient(180deg,#ff7aa2,#ff9eb8)";
+    page2.style.display="block";
+    setInterval(nameRain,700);
+  },1200);
+};
 
+/* SURPRISE */
 surpriseBtn.onclick=()=>{
-envelopeWrap.style.display="block";
-setTimeout(()=>envelopeWrap.classList.add("open"),100);
-surpriseBtn.style.display="none";
-}
+  envelopeWrap.style.display="block";
+  setTimeout(()=>envelopeWrap.classList.add("open"),100);
+  surpriseBtn.style.display="none";
+};
 </script>
 
 </body>
 </html>
+
 
 
 
